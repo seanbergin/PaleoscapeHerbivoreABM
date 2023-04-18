@@ -59,9 +59,10 @@ end
 
 to move-herbivores
 
+
     ifelse hours-since-water > hours-without-water[
-;     Print "getting water"
-;    set color pink
+     Print "getting water"
+    set color pink
       ifelse heading-to-water? [ ; already heading to a water patch
          ifelse distance target-water-patch < 1
          [ move-to target-water-patch ]
@@ -78,8 +79,8 @@ to move-herbivores
 
     [
       move-to one-of neighbors with [vt > 0]
-;    Print "wandering"
-;    set color green
+    Print "wandering"
+    set color green
     ]
 
 
