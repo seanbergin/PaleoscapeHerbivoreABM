@@ -13,8 +13,11 @@ globals[
 
 patches-own [
   vt                        ; vegetation/coastal resource type
-  kills-here                ; number of individuals that have died in a location
-
+  SNSBr-deaths-here
+  MSMix-deaths-here
+  LBr-deaths-here
+  WDGr-deaths-here
+  NRum-deaths-here
 ]
 
 turtles-own [
@@ -23,6 +26,8 @@ turtles-own [
   hours-without-water
   target-water-patch
   heading-to-water?
+  population-size
+  predation-risk
 
 ]
 
@@ -87,15 +92,28 @@ end
 
 
 to move-lions
-  move-to one-of neighbors with [vt > 0]
 
-  if any? turtles-here [
+  let nearby-patches neighbors with [vt > 0]
+  ; should move to a neighbor patch if they are occupied
+  let nearby-prey one-of nearby-patches with [any? turtles-here]
+
+  ifelse nearby-prey = nobody[
+    ;move to random neighbor
+    move-to one-of neighbors with [vt > 0]
+    print " no nearby-prey"
+  ][
+    print " attacking nearby-prey"
+    ;move to and attack animal
+    move-to nearby-prey
     let prey one-of turtles-here
     ifelse is-lion? prey[] [ ;record a kill as long as the other animal is not another lion
-      let this-patch patch-here
-      ask this-patch [set kills-here kills-here + 1]
-    ]
-  ]
+      ; record the kill type
+      if is-SNSBr? prey [ask patch-here [set SNSBr-deaths-here SNSBr-deaths-here + 1]]
+      if is-MSMix? prey [ask patch-here [set MSMix-deaths-here MSMix-deaths-here + 1]]
+      if is-LBr? prey [ask patch-here [set LBr-deaths-here LBr-deaths-here + 1]]
+      if is-WDGr? prey [ask patch-here [set  WDGr-deaths-here  WDGr-deaths-here + 1]]
+      if is-NRum? prey [ask patch-here [set NRum-deaths-here NRum-deaths-here + 1]]
+  ]]
 
 
 
@@ -110,6 +128,8 @@ to load-animals
     move-to one-of patches-vt
     set size 12
     set hours-without-water 100000000000000 ;not an important factor so this number is a stand in for infinity
+    set population-size 1
+    set predation-risk 0.002
   ]
 
   create-MSMixS 5
@@ -119,6 +139,8 @@ to load-animals
     move-to one-of patches-vt
     set size 15
     set hours-without-water (random 12) + 24
+    set population-size (random 121) + 30
+    set predation-risk 0.204
   ]
 
   create-LBrS 5
@@ -128,6 +150,8 @@ to load-animals
     move-to one-of patches-vt
     set size 15
     set hours-without-water (random 12) + 24
+    set population-size (random 11) + 5
+    set predation-risk 0.174
   ]
 
   create-WDGrS 5
@@ -137,6 +161,8 @@ to load-animals
     move-to one-of patches-vt
     set size 15
     set hours-without-water 12
+    set population-size (random 121) + 30
+    set predation-risk 0.441
   ]
 
   create-NRumS 2
@@ -146,23 +172,28 @@ to load-animals
     move-to one-of patches-vt
     set size 15
     set hours-without-water 12
+    set population-size (random 11) + 5
+    set predation-risk 0.178
   ]
 
   ask turtles [
-    set hours-since-water random 4
-    set herbivore? true ; lions are updated below
+    set hours-since-water random 10 ; so that not everyone starts out at the exact same thirst level
+    set herbivore? true ; lions are updated below and there aren't any lions yet
     set heading-to-water? false
   ]
 
   set herbivores turtles with [herbivore? = true]
 
-  create-lions 5
+
+  let lion-pop (count patches-vt) * lion-density
+  create-lions lion-pop
   [
     set shape "lion"
     set color yellow
     move-to one-of patches-vt
     set size 15
     set herbivore? false
+    set predation-risk 0
   ]
 
 end
@@ -200,7 +231,11 @@ to load-map
 
   ask patches-vt [
     set pcolor scale-color green vt -5 14
-    set kills-here 0
+    set SNSBr-deaths-here 0
+    set MSMix-deaths-here 0
+    set LBr-deaths-here 0
+    set WDGr-deaths-here 0
+    set NRum-deaths-here 0
   ]
 
   ask water-patches [set pcolor 88]
@@ -230,13 +265,12 @@ end
 
 
 
-
 @#$#@#$#@
 GRAPHICS-WINDOW
-296
-30
-581
-536
+322
+11
+607
+517
 -1
 -1
 2.5
@@ -309,6 +343,96 @@ NIL
 NIL
 NIL
 1
+
+SLIDER
+22
+170
+200
+203
+lion-density
+lion-density
+0
+0.1
+0.001
+0.001
+1
+per km
+HORIZONTAL
+
+SLIDER
+8
+290
+180
+323
+SNSBr-speed
+SNSBr-speed
+1
+5
+1.0
+1
+1
+km
+HORIZONTAL
+
+SLIDER
+7
+326
+179
+359
+MSMix-speed
+MSMix-speed
+1
+5
+1.0
+1
+1
+km
+HORIZONTAL
+
+SLIDER
+8
+363
+180
+396
+LBr-speed
+LBr-speed
+1
+5
+1.0
+1
+1
+km
+HORIZONTAL
+
+SLIDER
+9
+399
+181
+432
+WDGr-speed
+WDGr-speed
+1
+5
+1.0
+1
+1
+km
+HORIZONTAL
+
+SLIDER
+8
+434
+180
+467
+NRum-speed
+NRum-speed
+1
+5
+1.0
+1
+1
+km
+HORIZONTAL
 
 @#$#@#$#@
 ## WHAT IS IT?
