@@ -18,6 +18,8 @@ patches-own [
   LBr-deaths-here
   WDGr-deaths-here
   NRum-deaths-here
+  total-kills-here
+  vegetation-condition      ; 1-10 scale of the quality of forage in a location
 ]
 
 turtles-own [
@@ -56,8 +58,9 @@ to go
 
   ask herbivores [set hours-since-water hours-since-water + 1 ]
 
+  update-vegetation
 
-
+  ask patches with [total-kills-here > 0 ][set pcolor red]
   tick
 
 end
@@ -65,8 +68,7 @@ end
 to move-herbivores
 
     ifelse hours-since-water > hours-without-water[
-;     Print "getting water"
-;    set color pink
+   ; Needs Some Water- Thirsty
       ifelse heading-to-water? [ ; already heading to a water patch
          ifelse distance target-water-patch < 1
          [ move-to target-water-patch ]
@@ -81,10 +83,15 @@ to move-herbivores
       if [vt] of patch-here = 1 [ set hours-since-water 0 set heading-to-water? false]
     ]
 
-    [
-      move-to one-of neighbors with [vt > 0]
-;    Print "wandering"
-;    set color green
+    [; Foraging
+
+      let highest-value max [vegetation-condition] of neighbors
+
+      let my-destinations neighbors with [vt > 0 and vegetation-condition = highest-value]
+      move-to min-one-of my-destinations [total-kills-here]
+
+
+      ask patch-here [set vegetation-condition vegetation-condition - 1]
     ]
 
 
@@ -100,24 +107,32 @@ to move-lions
   ifelse nearby-prey = nobody[
     ;move to random neighbor
     move-to one-of neighbors with [vt > 0]
-    print " no nearby-prey"
   ][
-
     ;move to and attack animal
     move-to nearby-prey
     let prey one-of turtles-here
     ifelse is-lion? prey[] [ ;record a kill as long as the other animal is not another lion
       ; record the kill type
-      if is-SNSBr? prey [ask patch-here [set SNSBr-deaths-here SNSBr-deaths-here + 1]]
-      if is-MSMix? prey [ask patch-here [set MSMix-deaths-here MSMix-deaths-here + 1]]
-      if is-LBr? prey [ask patch-here [set LBr-deaths-here LBr-deaths-here + 1]]
-      if is-WDGr? prey [ask patch-here [set  WDGr-deaths-here  WDGr-deaths-here + 1]]
-      if is-NRum? prey [ask patch-here [set NRum-deaths-here NRum-deaths-here + 1]]
+      if is-SNSBr? prey [
+        ask patch-here [set SNSBr-deaths-here SNSBr-deaths-here + 1]
+      ]
+      if is-MSMix? prey [
+        ask patch-here [set MSMix-deaths-here MSMix-deaths-here + 1]
+      ]
+      if is-LBr? prey [
+        ask patch-here [set LBr-deaths-here LBr-deaths-here + 1]
+      ]
+      if is-WDGr? prey [
+        ask patch-here [set  WDGr-deaths-here  WDGr-deaths-here + 1]
+      ]
+      if is-NRum? prey [
+        ask patch-here [set NRum-deaths-here NRum-deaths-here + 1]
+      ]
   ]]
 
-
-
 end
+
+
 
 to load-animals
 
@@ -165,7 +180,7 @@ to load-animals
     set predation-risk 0.441
   ]
 
-  create-NRumS 2
+  create-NRumS 5
   [
     set shape "mammoth"
     set color gray
@@ -196,6 +211,14 @@ to load-animals
     set predation-risk 0
   ]
 
+end
+
+
+to update-vegetation
+   ask patches-vt [set total-kills-here SNSBr-deaths-here + MSMix-deaths-here + LBr-deaths-here + WDGr-deaths-here + NRum-deaths-here]
+   ask patches-vt with [vegetation-condition < 10 ] [set vegetation-condition vegetation-condition + 0.5]
+   ask patches-vt with [vegetation-condition < 0 ] [set vegetation-condition 0]
+   ask patches-vt with [vegetation-condition > 10 ] [set vegetation-condition 10]
 end
 
 
@@ -236,6 +259,8 @@ to load-map
     set LBr-deaths-here 0
     set WDGr-deaths-here 0
     set NRum-deaths-here 0
+    set total-kills-here 0
+    set vegetation-condition 10
   ]
 
   ask water-patches [set pcolor 88]
