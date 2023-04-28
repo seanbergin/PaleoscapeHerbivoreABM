@@ -1,6 +1,5 @@
 extensions [
   gis
-
 ]
 
 globals[
@@ -58,7 +57,6 @@ to setup
 end
 
 to go
-
 
   ask turtles[
     if is-lion? self [ if hour-of-day > heat-of-the-day-begins and hour-of-day < heat-of-the-day-ends  [move-lions]]
@@ -304,8 +302,33 @@ to load-map
 end
 
 
+to-report count-SNSBr
+  report count herbivores with [ is-SNSBr? self ]
+end
 
+to-report count-MSMix
+  let animals herbivores with [ is-MSMix? self ]
+  let total sum [population-size] of animals
+  report total
+end
 
+to-report count-LBr
+  let animals herbivores with [ is-LBr? self ]
+  let total sum [population-size] of animals
+  report total
+end
+
+to-report count-WDGr
+  let animals herbivores with [ is-WDGr? self ]
+  let total sum [population-size] of animals
+  report total
+end
+
+to-report count-NRum
+  let animals herbivores with  [ is-NRum? self ]
+  let total sum [population-size] of animals
+  report total
+end
 
 
 
@@ -516,10 +539,10 @@ NIL
 HORIZONTAL
 
 MONITOR
-715
-12
-789
-57
+716
+23
+790
+68
 Time of Day
 hour-of-day
 17
@@ -527,10 +550,10 @@ hour-of-day
 11
 
 MONITOR
-655
-12
-712
-57
+656
+23
+713
+68
 Days
 day-count
 17
@@ -538,10 +561,10 @@ day-count
 11
 
 SLIDER
-653
-62
-874
-95
+654
+73
+875
+106
 heat-of-the-day-begins
 heat-of-the-day-begins
 0
@@ -553,10 +576,10 @@ heat-of-the-day-begins
 HORIZONTAL
 
 SLIDER
-651
-98
-873
-131
+654
+109
+876
+142
 heat-of-the-day-ends
 heat-of-the-day-ends
 1
@@ -566,6 +589,28 @@ heat-of-the-day-ends
 1
 : 00
 HORIZONTAL
+
+PLOT
+655
+167
+1030
+386
+Herbivore Populations
+NIL
+NIL
+0.0
+10.0
+0.0
+10.0
+true
+true
+"" ""
+PENS
+"SNSBr" 1.0 0 -1184463 true "" "if ticks > 1 [plot count-SNSBr]"
+"MSMix" 1.0 0 -14454117 true "" "if ticks > 1 [plot count-MSMix]"
+"LBr" 1.0 0 -2674135 true "" "if ticks > 1 [plot count-LBr]"
+"WDGr" 1.0 0 -955883 true "" "if ticks > 1 [plot count-WDGr]"
+"NRum" 1.0 0 -15637942 true "" "if ticks > 1 [plot count-NRum]"
 
 @#$#@#$#@
 ## WHAT IS IT?
