@@ -41,6 +41,8 @@ breed [WDGrS WDGr]          ; Water-dependent grazers
 breed [NRumS NRum]          ; Nonruminants
 
 
+lions-own[time-since-last-meal]
+
 to setup
   clear-all
   reset-ticks
@@ -59,8 +61,9 @@ to go
   ask herbivores [set hours-since-water hours-since-water + 1 ]
 
   update-vegetation
-
-  ask patches with [total-kills-here > 0 ][set pcolor red]
+  update-herbivore-population
+  if display-kill-locations [ask patches with [total-kills-here > 0 ][set pcolor red]]
+  ask lions [set time-since-last-meal time-since-last-meal + 1]
   tick
 
 end
@@ -94,42 +97,49 @@ to move-herbivores
 
 end
 
-
 to move-lions
+if time-since-last-meal >= hours-between-lion-meals[
 
   let nearby-patches neighbors with [vt > 0]
   ; should move to a neighbor patch if they are occupied
   let nearby-prey one-of nearby-patches with [any? turtles-here]
 
-  ifelse nearby-prey = nobody[
-    ;move to random neighbor
-    move-to one-of neighbors with [vt > 0]
-  ][
-    ;move to and attack animal
-    move-to nearby-prey
-    let prey one-of turtles-here
-    ifelse is-lion? prey[] [ ;record a kill as long as the other animal is not another lion
-      ; record the kill type
-      if is-SNSBr? prey [
-        ask patch-here [set SNSBr-deaths-here SNSBr-deaths-here + 1]
-      ]
-      if is-MSMix? prey [
-        ask patch-here [set MSMix-deaths-here MSMix-deaths-here + 1]
-      ]
-      if is-LBr? prey [
-        ask patch-here [set LBr-deaths-here LBr-deaths-here + 1]
-      ]
-      if is-WDGr? prey [
-        ask patch-here [set  WDGr-deaths-here  WDGr-deaths-here + 1]
-      ]
-      if is-NRum? prey [
-        ask patch-here [set NRum-deaths-here NRum-deaths-here + 1]
-      ]
-  ]]
+     ifelse nearby-prey = nobody [ ;and
+       move-to one-of neighbors with [vt > 0]
+     ][
+       ;move to and attack animal
+       move-to nearby-prey
+       let prey one-of turtles-here
+       ifelse is-lion? prey[] [ ;record a kill as long as the other animal is not another lion
+         ; record the kill type
+         if is-SNSBr? prey [
+           ask patch-here [set SNSBr-deaths-here SNSBr-deaths-here + 1]
+           set time-since-last-meal 0
 
+         ]
+         if is-MSMix? prey [
+           ask patch-here [set MSMix-deaths-here MSMix-deaths-here + 1]
+           set time-since-last-meal 0
+           ask prey [set population-size population-size - 1]
+         ]
+         if is-LBr? prey [
+           ask patch-here [set LBr-deaths-here LBr-deaths-here + 1]
+           set time-since-last-meal 0
+           ask prey [set population-size population-size - 1]
+         ]
+         if is-WDGr? prey [
+           ask patch-here [set  WDGr-deaths-here  WDGr-deaths-here + 1]
+           set time-since-last-meal 0
+           ask prey [set population-size population-size - 1]
+         ]
+         if is-NRum? prey [
+           ask patch-here [set NRum-deaths-here NRum-deaths-here + 1]
+           set time-since-last-meal 0
+           ask prey [set population-size population-size - 1]
+         ]
+     ]]
+  ]
 end
-
-
 
 to load-animals
 
@@ -206,10 +216,10 @@ to load-animals
     set size 15
     set herbivore? false
     set predation-risk 0
+    set time-since-last-meal random 10
   ]
 
 end
-
 
 to update-vegetation
    ask patches-vt [set total-kills-here SNSBr-deaths-here + MSMix-deaths-here + LBr-deaths-here + WDGr-deaths-here + NRum-deaths-here]
@@ -218,6 +228,15 @@ to update-vegetation
    ask patches-vt with [vegetation-condition > 10 ] [set vegetation-condition 10]
 end
 
+to update-herbivore-population
+  ask SNSBrS with [population-size < 1][ set population-size 1 move-to one-of patches-vt]
+  ask MSMixS with [population-size < 1][ set population-size (random 121) + 30 move-to one-of patches-vt]
+  ask LBrS with [population-size < 1][ set population-size (random 11) + 5 move-to one-of patches-vt]
+  ask WDGrS with [population-size < 1][ set population-size (random 121) + 30 move-to one-of patches-vt]
+  ask NRumS with [population-size < 1][ set population-size (random 11) + 5 move-to one-of patches-vt]
+
+
+end
 
 to load-map
 
@@ -268,7 +287,6 @@ to load-map
 
 
 end
-
 
 
 
@@ -367,15 +385,15 @@ NIL
 1
 
 SLIDER
-22
-170
-200
-203
+8
+204
+186
+237
 lion-density
 lion-density
 0
 0.1
-0.001
+0.002
 0.001
 1
 per km
@@ -454,6 +472,32 @@ NRum-speed
 1
 1
 km
+HORIZONTAL
+
+SWITCH
+9
+475
+181
+508
+display-kill-locations
+display-kill-locations
+0
+1
+-1000
+
+SLIDER
+45
+539
+265
+572
+hours-between-lion-meals
+hours-between-lion-meals
+1
+50
+20.0
+1
+1
+NIL
 HORIZONTAL
 
 @#$#@#$#@
