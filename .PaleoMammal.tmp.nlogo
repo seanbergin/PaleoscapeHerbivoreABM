@@ -8,6 +8,8 @@ globals[
   patches-vt                ; patchset of locations with vegetation - aka not the ocean
   water-patches             ; patches which should contain water for animals to drink
   herbivores
+  day-count
+  hour-of-day
 
 ]
 
@@ -50,13 +52,22 @@ to setup
   load-map
   load-animals
 
+  set day-count 0
+  set hour-of-day 0
 
 end
 
 to go
 
-  ask herbivores [move-herbivores]
-  ask lions [move-lions]
+
+  ask turtles[
+    if is-lion? self [ if hour-of-day > heat-of-the-day-begins and hour-of-day < heat-of-the-day-ends  [move-lions]]
+    if is-SNSBr? self [ repeat SNSBr-speed [move-herbivores]]
+    if is-MSMix? self [ repeat MSMix-speed [move-herbivores]]
+    if is-LBr? self [ repeat LBr-speed [move-herbivores]]
+    if is-WDGr? self [ repeat WDGr-speed [move-herbivores]]
+    if is-NRum? self [ repeat NRum-speed [move-herbivores]]
+  ]
 
   ask herbivores [set hours-since-water hours-since-water + 1 ]
 
@@ -64,6 +75,11 @@ to go
   update-herbivore-population
   if display-kill-locations [ask patches with [total-kills-here > 0 ][set pcolor red]]
   ask lions [set time-since-last-meal time-since-last-meal + 1]
+  set hour-of-day hour-of-day + 1
+
+  if hour-of-day > 23 [set hour-of-day 0 set day-count day-count + 1]
+
+
   tick
 
 end
@@ -87,7 +103,6 @@ to move-herbivores
     ]
 
     [; Foraging
-
       let highest-value max [vegetation-condition] of neighbors
       let my-destinations neighbors with [vt > 0 and vegetation-condition = highest-value]
       move-to min-one-of my-destinations [total-kills-here]
@@ -229,9 +244,9 @@ to update-vegetation
 end
 
 to update-herbivore-population
-
+  ask SNSBrS with [population-size < 1][ set population-size 1 move-to one-of patches-vt]
   ask MSMixS with [population-size < 1][ set population-size (random 121) + 30 move-to one-of patches-vt]
-  ask LBrS with [population-size < 1][  move-to one-of patches-vt]
+  ask LBrS with [population-size < 1][ set population-size (random 11) + 5 move-to one-of patches-vt]
   ask WDGrS with [population-size < 1][ set population-size (random 121) + 30 move-to one-of patches-vt]
   ask NRumS with [population-size < 1][ set population-size (random 11) + 5 move-to one-of patches-vt]
 
@@ -468,7 +483,7 @@ NRum-speed
 NRum-speed
 1
 5
-1.0
+4.0
 1
 1
 km
@@ -486,10 +501,10 @@ display-kill-locations
 -1000
 
 SLIDER
-45
-539
-265
-572
+8
+241
+196
+274
 hours-between-lion-meals
 hours-between-lion-meals
 1
@@ -498,6 +513,58 @@ hours-between-lion-meals
 1
 1
 NIL
+HORIZONTAL
+
+MONITOR
+715
+12
+789
+57
+Time of Day
+hour-of-day
+17
+1
+11
+
+MONITOR
+655
+12
+712
+57
+Days
+day-count
+17
+1
+11
+
+SLIDER
+653
+62
+874
+95
+heat-of-the-day-begins
+heat-of-the-day-begins
+0
+23
+11.0
+1
+1
+: 00
+HORIZONTAL
+
+SLIDER
+651
+98
+873
+131
+heat-of-the-day-ends
+heat-of-the-day-ends
+1
+23
+16.0
+1
+1
+: 00
 HORIZONTAL
 
 @#$#@#$#@
