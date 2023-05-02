@@ -101,8 +101,36 @@ to move-herbivores
     ]
 
     [; Foraging
-      let highest-value max [vegetation-condition] of neighbors
-      let my-destinations neighbors with [vt > 0 and vegetation-condition = highest-value]
+
+    ;Rank Destinations by the vegetation types for each herbivore type
+    let best-vegetation 0
+    if is-SNSBr? self [ set best-vegetation neighbors with [vt = 3 or vt = 4 or vt = 5 or vt = 6 or vt = 8 or vt = 10]]
+    if is-MSMix? self [ set best-vegetation neighbors with [vt = 3 or vt = 4 or vt = 5 or vt = 6 or vt = 8 or vt = 10 or vt = 2]]
+    if is-LBr? self [ set best-vegetation neighbors with [vt = 10]]
+    if is-WDGr? self [ set best-vegetation neighbors with [vt = 7]]
+    if is-NRum? self [set best-vegetation neighbors with [vt = 1 or vt = 7 or vt = 10] ]
+
+     ;Rank Destinations by the vegetation types for the second tier of preference
+    if not any? best-vegetation[
+      if is-SNSBr? self [ set best-vegetation neighbors with [vt = 1 or vt = 9 or vt = 11]]
+      if is-MSMix? self [ set best-vegetation neighbors with [vt = 1 or vt = 7 or vt = 11]]
+      if is-LBr? self [ set best-vegetation neighbors with [vt = 1]]
+      if is-WDGr? self [ set best-vegetation neighbors with [vt = 1]]
+      if is-NRum? self [set best-vegetation neighbors with [vt = 9 or vt = 11] ]
+    ]
+     ;Rank Destinations by the vegetation types for the third tier of preference
+     if not any? best-vegetation[
+      if is-SNSBr? self [ set best-vegetation neighbors with [vt = 7]]
+      if is-MSMix? self [ set best-vegetation neighbors with [vt = 9]]
+      if is-LBr? self [ set best-vegetation neighbors with [vt = 7 or vt = 9 or vt = 11]]
+      if is-WDGr? self [ set best-vegetation neighbors with [vt = 11]]
+      if is-NRum? self [set best-vegetation neighbors with [vt > 0] ]
+    ]
+    ; Include all other patches since the intial preferences were not found
+      if not any? best-vegetation  [ set best-vegetation neighbors with [vt > 0]]
+
+      let highest-value max [vegetation-condition] of best-vegetation
+      let my-destinations best-vegetation with [vt > 0 and vegetation-condition = highest-value]
       move-to min-one-of my-destinations [total-kills-here]
       ask patch-here [set vegetation-condition vegetation-condition - 1]
     ]
@@ -329,7 +357,6 @@ to-report count-NRum
   let total sum [population-size] of animals
   report total
 end
-
 
 
 
