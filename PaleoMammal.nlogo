@@ -9,6 +9,11 @@ globals[
   herbivores
   day-count
   hour-of-day
+  predation-risk1
+  predation-risk2
+  predation-risk3
+  predation-risk4
+  predation-risk5
 
 ]
 
@@ -53,6 +58,14 @@ to setup
 
   set day-count 0
   set hour-of-day 0
+
+
+  set predation-risk1 Low-Risk-of-Death
+  set predation-risk2 ((High-Risk-of-Death - Low-Risk-of-Death) / 4) + Low-Risk-of-Death
+  set predation-risk3 ((High-Risk-of-Death - Low-Risk-of-Death) / 4) + predation-risk2
+  set predation-risk4 ((High-Risk-of-Death - Low-Risk-of-Death) / 4) + predation-risk3
+  set predation-risk5 High-Risk-of-Death
+
 
 end
 
@@ -151,32 +164,92 @@ if time-since-last-meal >= hours-between-lion-meals[
        ;move to and attack animal
        move-to nearby-prey
        let prey one-of turtles-here
+       let chance-of-death 0
        ifelse is-lion? prey[] [ ;record a kill as long as the other animal is not another lion
          ; record the kill type
          if is-SNSBr? prey [
+          if [vt] of patch-here = 1 [set chance-of-death predation-risk4]
+          if [vt] of patch-here = 2 [set chance-of-death predation-risk4]
+          if [vt] of patch-here = 3 [set chance-of-death predation-risk4]
+          if [vt] of patch-here = 4 [set chance-of-death predation-risk2]
+          if [vt] of patch-here = 5 [set chance-of-death predation-risk3]
+          if [vt] of patch-here = 6 [set chance-of-death predation-risk4]
+          if [vt] of patch-here = 7 [set chance-of-death predation-risk1]
+          if [vt] of patch-here = 8 [set chance-of-death predation-risk3]
+          if [vt] of patch-here = 10 [set chance-of-death predation-risk5]
+
+          if random 100 < chance-of-death [
            ask patch-here [set SNSBr-deaths-here SNSBr-deaths-here + 1]
            set time-since-last-meal 0
-
+          ]
          ]
          if is-MSMix? prey [
+          if [vt] of patch-here = 1 [set chance-of-death predation-risk3]
+          if [vt] of patch-here = 2 [set chance-of-death predation-risk3]
+          if [vt] of patch-here = 3 [set chance-of-death predation-risk3]
+          if [vt] of patch-here = 4 [set chance-of-death predation-risk2]
+          if [vt] of patch-here = 5 [set chance-of-death predation-risk2]
+          if [vt] of patch-here = 6 [set chance-of-death predation-risk3]
+          if [vt] of patch-here = 7 [set chance-of-death predation-risk3]
+          if [vt] of patch-here = 8 [set chance-of-death predation-risk2]
+          if [vt] of patch-here = 10 [set chance-of-death predation-risk5]
+
+          if random 100 < chance-of-death [
            ask patch-here [set MSMix-deaths-here MSMix-deaths-here + 1]
            set time-since-last-meal 0
            ask prey [set population-size population-size - 1]
+          ]
          ]
          if is-LBr? prey [
+          if [vt] of patch-here = 1 [set chance-of-death predation-risk3]
+          if [vt] of patch-here = 2 [set chance-of-death predation-risk2]
+          if [vt] of patch-here = 3 [set chance-of-death predation-risk2]
+          if [vt] of patch-here = 4 [set chance-of-death predation-risk1]
+          if [vt] of patch-here = 5 [set chance-of-death predation-risk1]
+          if [vt] of patch-here = 6 [set chance-of-death predation-risk2]
+          if [vt] of patch-here = 7 [set chance-of-death predation-risk1]
+          if [vt] of patch-here = 8 [set chance-of-death predation-risk2]
+          if [vt] of patch-here = 10 [set chance-of-death predation-risk4]
+
+          if random 100 < chance-of-death [
            ask patch-here [set LBr-deaths-here LBr-deaths-here + 1]
            set time-since-last-meal 0
            ask prey [set population-size population-size - 1]
+          ]
          ]
          if is-WDGr? prey [
+          if [vt] of patch-here = 1 [set chance-of-death predation-risk4]
+          if [vt] of patch-here = 2 [set chance-of-death predation-risk3]
+          if [vt] of patch-here = 3 [set chance-of-death predation-risk3]
+          if [vt] of patch-here = 4 [set chance-of-death predation-risk2]
+          if [vt] of patch-here = 5 [set chance-of-death predation-risk2]
+          if [vt] of patch-here = 6 [set chance-of-death predation-risk3]
+          if [vt] of patch-here = 7 [set chance-of-death predation-risk2]
+          if [vt] of patch-here = 8 [set chance-of-death predation-risk3]
+          if [vt] of patch-here = 10 [set chance-of-death predation-risk4]
+
+          if random 100 < chance-of-death [
            ask patch-here [set  WDGr-deaths-here  WDGr-deaths-here + 1]
            set time-since-last-meal 0
            ask prey [set population-size population-size - 1]
+          ]
          ]
          if is-NRum? prey [
+          if [vt] of patch-here = 1 [set chance-of-death predation-risk2]
+          if [vt] of patch-here = 2 [set chance-of-death predation-risk2]
+          if [vt] of patch-here = 3 [set chance-of-death predation-risk2]
+          if [vt] of patch-here = 4 [set chance-of-death predation-risk1]
+          if [vt] of patch-here = 5 [set chance-of-death predation-risk2]
+          if [vt] of patch-here = 6 [set chance-of-death predation-risk2]
+          if [vt] of patch-here = 7 [set chance-of-death predation-risk1]
+          if [vt] of patch-here = 8 [set chance-of-death predation-risk2]
+          if [vt] of patch-here = 10 [set chance-of-death predation-risk3]
+
+          if random 100 < chance-of-death [
            ask patch-here [set NRum-deaths-here NRum-deaths-here + 1]
            set time-since-last-meal 0
            ask prey [set population-size population-size - 1]
+          ]
          ]
      ]]
   ]
@@ -638,6 +711,36 @@ PENS
 "LBr" 1.0 0 -2674135 true "" "if ticks > 1 [plot count-LBr]"
 "WDGr" 1.0 0 -955883 true "" "if ticks > 1 [plot count-WDGr]"
 "NRum" 1.0 0 -15637942 true "" "if ticks > 1 [plot count-NRum]"
+
+SLIDER
+31
+579
+208
+612
+High-Risk-of-Death
+High-Risk-of-Death
+1
+100
+90.0
+1
+1
+NIL
+HORIZONTAL
+
+SLIDER
+32
+617
+208
+650
+Low-Risk-of-Death
+Low-Risk-of-Death
+1
+100
+10.0
+1
+1
+NIL
+HORIZONTAL
 
 @#$#@#$#@
 ## WHAT IS IT?
