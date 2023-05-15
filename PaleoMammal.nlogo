@@ -37,6 +37,21 @@ turtles-own [
   population-size
   predation-risk
 
+  veg-type1-traversed
+  veg-type2-traversed
+  veg-type3-traversed
+  veg-type4-traversed
+  veg-type5-traversed
+  veg-type6-traversed
+  veg-type7-traversed
+  veg-type8-traversed
+  veg-type9-traversed
+  veg-type10-traversed
+  veg-type11-traversed
+  veg-type12-traversed
+  veg-type13-traversed
+  veg-type14-traversed
+
 ]
 
 breed [lions lion]
@@ -72,7 +87,10 @@ end
 to go
 
   ask turtles[
-    if is-lion? self [ if hour-of-day > heat-of-the-day-begins and hour-of-day < heat-of-the-day-ends  [move-lions]]
+    if is-lion? self [
+      if hour-of-day > heat-of-the-day-begins and hour-of-day < heat-of-the-day-ends  [repeat lion-speed [move-lions]]
+      if lions-move-more-at-night [ if hour-of-day > 19 or hour-of-day < 7 [repeat (lion-speed + 1) [move-lions]]]
+    ]
     if is-SNSBr? self [ repeat SNSBr-speed [move-herbivores]]
     if is-MSMix? self [ repeat MSMix-speed [move-herbivores]]
     if is-LBr? self [ repeat LBr-speed [move-herbivores]]
@@ -148,12 +166,28 @@ to move-herbivores
       ask patch-here [set vegetation-condition vegetation-condition - 1]
     ]
 
+  ;Record the vegetation type of the patch the animal ended up on
+  let veg-traversed [vt] of patch-here
+  if veg-traversed = 1 [set veg-type1-traversed veg-type1-traversed + 1]
+  if veg-traversed = 2 [set veg-type2-traversed veg-type1-traversed + 1]
+  if veg-traversed = 3 [set veg-type3-traversed veg-type1-traversed + 1]
+  if veg-traversed = 4 [set veg-type4-traversed veg-type1-traversed + 1]
+  if veg-traversed = 5 [set veg-type5-traversed veg-type1-traversed + 1]
+  if veg-traversed = 6 [set veg-type6-traversed veg-type1-traversed + 1]
+  if veg-traversed = 7 [set veg-type7-traversed veg-type1-traversed + 1]
+  if veg-traversed = 8 [set veg-type8-traversed veg-type1-traversed + 1]
+  if veg-traversed = 9 [set veg-type9-traversed veg-type1-traversed + 1]
+  if veg-traversed = 10 [set veg-type10-traversed veg-type1-traversed + 1]
+  if veg-traversed = 11 [set veg-type11-traversed veg-type1-traversed + 1]
+  if veg-traversed = 12 [set veg-type12-traversed veg-type1-traversed + 1]
+  if veg-traversed = 13 [set veg-type13-traversed veg-type1-traversed + 1]
+  if veg-traversed = 14 [set veg-type14-traversed veg-type1-traversed + 1]
 
 end
 
 to move-lions
 if time-since-last-meal >= hours-between-lion-meals[
-
+  set color blue
   let nearby-patches neighbors with [vt > 0]
   ; should move to a neighbor patch if they are occupied
   let nearby-prey one-of nearby-patches with [any? turtles-here]
@@ -253,81 +287,177 @@ if time-since-last-meal >= hours-between-lion-meals[
          ]
      ]]
   ]
+
 end
 
-to load-animals
 
-  create-SNSBrS 5
-  [
+to make-SNSBrS [ amount veg-to-go-to]
+  create-SNSBrS amount [
     set shape "duiker"
     set color 33
-    move-to one-of patches-vt
-    set size 12
+    move-to one-of patches-vt with [vt = veg-to-go-to]
+    set size 5
     set hours-without-water 100000000000000 ;not an important factor so this number is a stand in for infinity
     set population-size 1
     set predation-risk 0.002
   ]
+end
 
-  create-MSMixS 5
-  [
+to make-MSMixS [ amount veg-to-go-to]
+    create-MSMixS amount[
     set shape "gazelle"
     set color brown
-    move-to one-of patches-vt
-    set size 15
-    set hours-without-water (random 12) + 24
-    set population-size (random 121) + 30
+    move-to one-of patches-vt with [vt = veg-to-go-to]
+    set size 7
+    set hours-without-water (random 12) + 48 ; 2-3 DAYS
+    ;set population-size (random 121) + 30
     set predation-risk 0.204
   ]
+end
 
-  create-LBrS 5
-  [
+to make-LBrS [ amount veg-to-go-to]
+    create-LBrS amount[
     set shape "giraffe"
-    set color 45
-    move-to one-of patches-vt
-    set size 15
-    set hours-without-water (random 12) + 24
-    set population-size (random 11) + 5
+    set color 47
+    move-to one-of patches-vt with [vt = veg-to-go-to]
+    set size 7
+    set hours-without-water (random 12) + 24 ; 2-3 DAYS
+    ;set population-size (random 11) + 5
     set predation-risk 0.174
   ]
 
-  create-WDGrS 5
-  [
+end
+
+to make-WDGrS [ amount veg-to-go-to]
+    create-WDGrS amount[
     set shape "wildebeest"
     set color 33
-    move-to one-of patches-vt
-    set size 15
-    set hours-without-water 12
-    set population-size (random 121) + 30
+    move-to one-of patches-vt with [vt = veg-to-go-to]
+    set size 7
+    set hours-without-water 24
+    ;set population-size (random 121) + 30
     set predation-risk 0.441
   ]
 
-  create-NRumS 5
-  [
+end
+
+to make-NRumS [ amount veg-to-go-to]
+  create-NRumS amount[
     set shape "mammoth"
     set color gray
-    move-to one-of patches-vt
-    set size 15
-    set hours-without-water 12
-    set population-size (random 11) + 5
+    move-to one-of patches-vt with [vt = veg-to-go-to]
+    set size 7
+    set hours-without-water 24
+    ;set population-size (random 11) + 5
     set predation-risk 0.178
   ]
 
-  ask turtles [
+end
+
+to load-animals
+
+  let veg-type 1
+  let veg-type-area count patches-vt with [vt = veg-type]
+  make-SNSBrS (veg-type-area * 0.13)  veg-type
+  make-MSMixS ((veg-type-area * 3.58) / 90)  veg-type
+  make-LBrS ((veg-type-area * 0.52) / 10)  veg-type
+  make-WDGrS ((veg-type-area * 4.57) / 90)  veg-type
+  make-NRumS ((veg-type-area * 0.97) / 10)  veg-type
+
+  set veg-type 2
+  set veg-type-area count patches-vt with [vt = veg-type]
+  make-SNSBrS (veg-type-area * 3.36)  veg-type
+  make-MSMixS ((veg-type-area * 1.66) / 90)  veg-type
+  make-LBrS ((veg-type-area * 0.85) / 10)  veg-type
+  make-WDGrS ((veg-type-area * 2.75) / 90)  veg-type
+  make-NRumS ((veg-type-area * 1.11) / 10)  veg-type
+
+  set veg-type 3
+  set veg-type-area count patches-vt with [vt = veg-type]
+  make-SNSBrS (veg-type-area * 0.66)  veg-type
+  make-MSMixS ((veg-type-area * 3.55) / 90)  veg-type
+  make-LBrS ((veg-type-area * 0.04) / 10)  veg-type
+  make-WDGrS ((veg-type-area * 0.54) / 90)  veg-type
+  make-NRumS ((veg-type-area * 0.07) / 10)  veg-type
+
+  set veg-type 4
+  set veg-type-area count patches-vt with [vt = veg-type]
+  make-SNSBrS (veg-type-area * 0.61)  veg-type
+  make-MSMixS ((veg-type-area * 2.01) / 90)  veg-type
+  make-LBrS ((veg-type-area * 0.04) / 10)  veg-type
+  make-WDGrS ((veg-type-area * 0.38) / 90)  veg-type
+  make-NRumS ((veg-type-area * 0.06) / 10)  veg-type
+
+  set veg-type 5
+  set veg-type-area count patches-vt with [vt = veg-type]
+  make-SNSBrS (veg-type-area * 0.62)  veg-type
+  make-MSMixS ((veg-type-area * 6.18) / 90)  veg-type
+  make-LBrS ((veg-type-area * 0.14) / 10)  veg-type
+  make-WDGrS ((veg-type-area * 2.92) / 90)  veg-type
+  make-NRumS ((veg-type-area * 0.44) / 10)  veg-type
+
+  set veg-type 6
+  set veg-type-area count patches-vt with [vt = veg-type]
+  make-SNSBrS (veg-type-area * 0.79)  veg-type
+  make-MSMixS ((veg-type-area * 6.33) / 90)  veg-type
+  make-LBrS ((veg-type-area * 0.05) / 10)  veg-type
+  make-WDGrS ((veg-type-area * 0.88) / 90)  veg-type
+  make-NRumS ((veg-type-area * 0.12) / 10)  veg-type
+
+  set veg-type 7
+  set veg-type-area count patches-vt with [vt = veg-type]
+  make-SNSBrS (veg-type-area * 0.61)  veg-type
+  make-MSMixS ((veg-type-area * 6.66) / 90)  veg-type
+  make-LBrS ((veg-type-area * 0.29) / 10)  veg-type
+  make-WDGrS ((veg-type-area * 5.37) / 90)  veg-type
+  make-NRumS ((veg-type-area * 0.82) / 10)  veg-type
+
+  set veg-type 8
+  set veg-type-area count patches-vt with [vt = veg-type]
+  make-SNSBrS (veg-type-area * 0.75)  veg-type
+  make-MSMixS ((veg-type-area * 5.71) / 90)  veg-type
+  make-LBrS ((veg-type-area * 0.04) / 10)  veg-type
+  make-WDGrS ((veg-type-area * 0.77) / 90)  veg-type
+  make-NRumS ((veg-type-area * 0.01) / 10)  veg-type
+
+  set veg-type 10
+  set veg-type-area count patches-vt with [vt = veg-type]
+  make-SNSBrS (veg-type-area * 3.36)  veg-type
+  make-MSMixS ((veg-type-area * 1.67) / 90)  veg-type
+  make-LBrS ((veg-type-area * 0.85) / 10)  veg-type
+  make-WDGrS ((veg-type-area * 2.75) / 90)  veg-type
+  make-NRumS ((veg-type-area * 1.11) / 10)  veg-type
+
+
+  ask turtles [ ; Only herbivores have been created so this is really only herbivores
     set hours-since-water random 10 ; so that not everyone starts out at the exact same thirst level
     set herbivore? true ; lions are updated below and there aren't any lions yet
     set heading-to-water? false
+    set veg-type1-traversed 0
+    set veg-type2-traversed 0
+    set veg-type3-traversed 0
+    set veg-type4-traversed 0
+    set veg-type5-traversed 0
+    set veg-type6-traversed 0
+    set veg-type7-traversed 0
+    set veg-type8-traversed 0
+    set veg-type9-traversed 0
+    set veg-type10-traversed 0
+    set veg-type11-traversed 0
+    set veg-type12-traversed 0
+    set veg-type13-traversed 0
+    set veg-type14-traversed 0
   ]
 
   set herbivores turtles with [herbivore? = true]
-
 
   let lion-pop (count patches-vt) * lion-density
   create-lions lion-pop
   [
     set shape "lion"
-    set color yellow
+    set color 45
     move-to one-of patches-vt
-    set size 15
+    set size 4
     set herbivore? false
     set predation-risk 0
     set time-since-last-meal random 10
@@ -440,9 +570,6 @@ end
 
 
 
-
-
-
 @#$#@#$#@
 GRAPHICS-WINDOW
 322
@@ -523,15 +650,15 @@ NIL
 1
 
 SLIDER
-8
-204
-186
-237
+649
+440
+827
+473
 lion-density
 lion-density
 0
 0.1
-0.002
+0.08
 0.001
 1
 per km
@@ -539,14 +666,14 @@ HORIZONTAL
 
 SLIDER
 8
-290
+199
 180
-323
+232
 SNSBr-speed
 SNSBr-speed
 1
 5
-1.0
+5.0
 1
 1
 km
@@ -554,9 +681,9 @@ HORIZONTAL
 
 SLIDER
 7
-326
+235
 179
-359
+268
 MSMix-speed
 MSMix-speed
 1
@@ -569,9 +696,9 @@ HORIZONTAL
 
 SLIDER
 8
-363
+272
 180
-396
+305
 LBr-speed
 LBr-speed
 1
@@ -584,9 +711,9 @@ HORIZONTAL
 
 SLIDER
 9
-399
+308
 181
-432
+341
 WDGr-speed
 WDGr-speed
 1
@@ -599,9 +726,9 @@ HORIZONTAL
 
 SLIDER
 8
-434
+343
 180
-467
+376
 NRum-speed
 NRum-speed
 1
@@ -614,9 +741,9 @@ HORIZONTAL
 
 SWITCH
 9
-475
+384
 181
-508
+417
 display-kill-locations
 display-kill-locations
 0
@@ -624,10 +751,10 @@ display-kill-locations
 -1000
 
 SLIDER
-8
-241
-196
-274
+649
+477
+837
+510
 hours-between-lion-meals
 hours-between-lion-meals
 1
@@ -713,10 +840,10 @@ PENS
 "NRum" 1.0 0 -15637942 true "" "if ticks > 1 [plot count-NRum]"
 
 SLIDER
-31
-579
-208
-612
+7
+426
+184
+459
 High-Risk-of-Death
 High-Risk-of-Death
 1
@@ -728,10 +855,10 @@ NIL
 HORIZONTAL
 
 SLIDER
-32
-617
-208
-650
+8
+464
+184
+497
 Low-Risk-of-Death
 Low-Risk-of-Death
 1
@@ -741,6 +868,42 @@ Low-Risk-of-Death
 1
 NIL
 HORIZONTAL
+
+SLIDER
+649
+517
+821
+550
+lion-speed
+lion-speed
+1
+5
+1.0
+1
+1
+km
+HORIZONTAL
+
+SWITCH
+648
+556
+849
+589
+lions-move-more-at-night
+lions-move-more-at-night
+0
+1
+-1000
+
+TEXTBOX
+651
+420
+801
+438
+LION SETTINGS
+11
+0.0
+1
 
 @#$#@#$#@
 ## WHAT IS IT?
