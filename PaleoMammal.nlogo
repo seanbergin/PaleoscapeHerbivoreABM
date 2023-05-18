@@ -15,6 +15,21 @@ globals[
   predation-risk4
   predation-risk5
 
+  veg-type1-encountered
+  veg-type2-encountered
+  veg-type3-encountered
+  veg-type4-encountered
+  veg-type5-encountered
+  veg-type6-encountered
+  veg-type7-encountered
+  veg-type8-encountered
+  veg-type9-encountered
+  veg-type10-encountered
+  veg-type11-encountered
+  veg-type12-encountered
+  veg-type13-encountered
+  veg-type14-encountered
+
 ]
 
 patches-own [
@@ -80,6 +95,8 @@ to setup
   set predation-risk3 ((High-Risk-of-Death - Low-Risk-of-Death) / 4) + predation-risk2
   set predation-risk4 ((High-Risk-of-Death - Low-Risk-of-Death) / 4) + predation-risk3
   set predation-risk5 High-Risk-of-Death
+
+  if display-mode? [modify-for-display]
 
 
 end
@@ -192,15 +209,33 @@ if time-since-last-meal >= hours-between-lion-meals[
   ; should move to a neighbor patch if they are occupied
   let nearby-prey one-of nearby-patches with [any? turtles-here]
 
-     ifelse nearby-prey = nobody [ ;and
+     ifelse nearby-prey = nobody [ ; No prey is nearby so move around randomly
        move-to one-of neighbors with [vt > 0]
      ][
        ;move to and attack animal
        move-to nearby-prey
        let prey one-of turtles-here
+
        let chance-of-death 0
        ifelse is-lion? prey[] [ ;record a kill as long as the other animal is not another lion
-         ; record the kill type
+
+        ; Record encounter rate for each veg type
+          if [vt] of patch-here = 1 [set veg-type1-encountered veg-type1-encountered + 1]
+          if [vt] of patch-here = 2 [set veg-type2-encountered veg-type2-encountered + 1]
+          if [vt] of patch-here = 3 [set veg-type3-encountered veg-type3-encountered + 1]
+          if [vt] of patch-here = 4 [set veg-type4-encountered veg-type4-encountered + 1]
+          if [vt] of patch-here = 5 [set veg-type5-encountered veg-type5-encountered + 1]
+          if [vt] of patch-here = 6 [set veg-type6-encountered veg-type6-encountered + 1]
+          if [vt] of patch-here = 7 [set veg-type7-encountered veg-type7-encountered + 1]
+          if [vt] of patch-here = 8 [set veg-type8-encountered veg-type8-encountered + 1]
+          if [vt] of patch-here = 9 [set veg-type9-encountered veg-type9-encountered + 1]
+          if [vt] of patch-here = 10 [set veg-type10-encountered veg-type10-encountered + 1]
+          if [vt] of patch-here = 11 [set veg-type11-encountered veg-type11-encountered + 1]
+          if [vt] of patch-here = 12 [set veg-type12-encountered veg-type12-encountered + 1]
+          if [vt] of patch-here = 13 [set veg-type13-encountered veg-type13-encountered + 1]
+          if [vt] of patch-here = 14 [set veg-type14-encountered veg-type14-encountered + 1]
+
+         ; Identify the predation risk based on species and vegetation type
          if is-SNSBr? prey [
           if [vt] of patch-here = 1 [set chance-of-death predation-risk4]
           if [vt] of patch-here = 2 [set chance-of-death predation-risk4]
@@ -296,7 +331,7 @@ to make-SNSBrS [ amount veg-to-go-to]
     set shape "duiker"
     set color 33
     move-to one-of patches-vt with [vt = veg-to-go-to]
-    set size 5
+    set size 2
     set hours-without-water 100000000000000 ;not an important factor so this number is a stand in for infinity
     set population-size 1
     set predation-risk 0.002
@@ -308,7 +343,7 @@ to make-MSMixS [ amount veg-to-go-to]
     set shape "gazelle"
     set color brown
     move-to one-of patches-vt with [vt = veg-to-go-to]
-    set size 7
+    set size 4
     set hours-without-water (random 12) + 48 ; 2-3 DAYS
     ;set population-size (random 121) + 30
     set predation-risk 0.204
@@ -320,7 +355,7 @@ to make-LBrS [ amount veg-to-go-to]
     set shape "giraffe"
     set color 47
     move-to one-of patches-vt with [vt = veg-to-go-to]
-    set size 7
+    set size 4
     set hours-without-water (random 12) + 24 ; 2-3 DAYS
     ;set population-size (random 11) + 5
     set predation-risk 0.174
@@ -333,7 +368,7 @@ to make-WDGrS [ amount veg-to-go-to]
     set shape "wildebeest"
     set color 33
     move-to one-of patches-vt with [vt = veg-to-go-to]
-    set size 7
+    set size 4
     set hours-without-water 24
     ;set population-size (random 121) + 30
     set predation-risk 0.441
@@ -452,12 +487,11 @@ to load-animals
   set herbivores turtles with [herbivore? = true]
 
   let lion-pop (count patches-vt) * lion-density
-  create-lions lion-pop
-  [
+  create-lions lion-pop [
     set shape "lion"
     set color 45
     move-to one-of patches-vt
-    set size 4
+    set size 2
     set herbivore? false
     set predation-risk 0
     set time-since-last-meal random 10
@@ -521,6 +555,21 @@ to load-map
     set NRum-deaths-here 0
     set total-kills-here 0
     set vegetation-condition 10
+
+    set veg-type1-encountered 0
+    set veg-type2-encountered 0
+    set veg-type3-encountered 0
+    set veg-type4-encountered 0
+    set veg-type5-encountered 0
+    set veg-type6-encountered 0
+    set veg-type7-encountered 0
+    set veg-type8-encountered 0
+    set veg-type9-encountered 0
+    set veg-type10-encountered 0
+    set veg-type11-encountered 0
+    set veg-type12-encountered 0
+    set veg-type13-encountered 0
+    set veg-type14-encountered 0
   ]
 
   ask water-patches [set pcolor 88]
@@ -528,6 +577,8 @@ to load-map
   ask patches with [pcolor = black] [
     set vt 0
     set pcolor blue]
+
+
 
 
 end
@@ -563,9 +614,13 @@ end
 
 
 
+to modify-for-display
+  ; to make viewing and testing the model simpler this procedure lowers the number of agents in the model
 
+let total-animals count turtles
+  repeat (total-animals * 0.75) [ask one-of turtles [die]]
 
-
+end
 
 
 
@@ -673,7 +728,7 @@ SNSBr-speed
 SNSBr-speed
 1
 5
-5.0
+1.0
 1
 1
 km
@@ -688,7 +743,7 @@ MSMix-speed
 MSMix-speed
 1
 5
-1.0
+2.0
 1
 1
 km
@@ -703,7 +758,7 @@ LBr-speed
 LBr-speed
 1
 5
-1.0
+2.0
 1
 1
 km
@@ -718,7 +773,7 @@ WDGr-speed
 WDGr-speed
 1
 5
-1.0
+2.0
 1
 1
 km
@@ -733,7 +788,7 @@ NRum-speed
 NRum-speed
 1
 5
-4.0
+2.0
 1
 1
 km
@@ -904,6 +959,17 @@ LION SETTINGS
 11
 0.0
 1
+
+SWITCH
+6
+557
+154
+590
+display-mode?
+display-mode?
+0
+1
+-1000
 
 @#$#@#$#@
 ## WHAT IS IT?
@@ -1313,6 +1379,58 @@ NetLogo 6.3.0
 @#$#@#$#@
 @#$#@#$#@
 @#$#@#$#@
+<experiments>
+  <experiment name="experiment-test" repetitions="1" runMetricsEveryStep="true">
+    <setup>setup</setup>
+    <go>go</go>
+    <metric>count turtles</metric>
+    <enumeratedValueSet variable="display-kill-locations">
+      <value value="false"/>
+    </enumeratedValueSet>
+    <enumeratedValueSet variable="High-Risk-of-Death">
+      <value value="90"/>
+    </enumeratedValueSet>
+    <enumeratedValueSet variable="display-mode?">
+      <value value="true"/>
+    </enumeratedValueSet>
+    <enumeratedValueSet variable="LBr-speed">
+      <value value="2"/>
+    </enumeratedValueSet>
+    <enumeratedValueSet variable="heat-of-the-day-ends">
+      <value value="16"/>
+    </enumeratedValueSet>
+    <enumeratedValueSet variable="lion-density">
+      <value value="0.08"/>
+    </enumeratedValueSet>
+    <enumeratedValueSet variable="heat-of-the-day-begins">
+      <value value="11"/>
+    </enumeratedValueSet>
+    <enumeratedValueSet variable="lions-move-more-at-night">
+      <value value="true"/>
+    </enumeratedValueSet>
+    <enumeratedValueSet variable="lion-speed">
+      <value value="1"/>
+    </enumeratedValueSet>
+    <enumeratedValueSet variable="NRum-speed">
+      <value value="2"/>
+    </enumeratedValueSet>
+    <enumeratedValueSet variable="hours-between-lion-meals">
+      <value value="20"/>
+    </enumeratedValueSet>
+    <enumeratedValueSet variable="MSMix-speed">
+      <value value="2"/>
+    </enumeratedValueSet>
+    <enumeratedValueSet variable="Low-Risk-of-Death">
+      <value value="10"/>
+    </enumeratedValueSet>
+    <enumeratedValueSet variable="SNSBr-speed">
+      <value value="1"/>
+    </enumeratedValueSet>
+    <enumeratedValueSet variable="WDGr-speed">
+      <value value="2"/>
+    </enumeratedValueSet>
+  </experiment>
+</experiments>
 @#$#@#$#@
 @#$#@#$#@
 default
