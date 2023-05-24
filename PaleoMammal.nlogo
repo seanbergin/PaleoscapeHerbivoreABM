@@ -624,6 +624,247 @@ end
 
 
 
+to-report save-model-output
+; - Number of animals encountered on each vegetation type (14 columns)
+; - Death total for each herbivore type for each vegetation type (5 * 14  = 70 columns)
+; - Time spent for each herbivore type on each vegetation type (5 * 14  = 70 columns)
+
+
+  let v1h1-death  sum [SNSBr-deaths-here] of patches with [vt = 1]
+  let v1h2-death  sum [MSMix-deaths-here] of patches with [vt = 1]
+  let v1h3-death  sum [LBr-deaths-here] of patches with [vt = 1]
+  let v1h4-death  sum [WDGr-deaths-here] of patches with [vt = 1]
+  let v1h5-death  sum [NRum-deaths-here] of patches with [vt = 1]
+
+  let v2h1-death  sum [SNSBr-deaths-here] of patches with [vt = 2]
+  let v2h2-death  sum [MSMix-deaths-here] of patches with [vt = 2]
+  let v2h3-death  sum [LBr-deaths-here] of patches with [vt = 2]
+  let v2h4-death  sum [WDGr-deaths-here] of patches with [vt = 2]
+  let v2h5-death  sum [NRum-deaths-here] of patches with [vt = 2]
+
+  let v3h1-death  sum [SNSBr-deaths-here] of patches with [vt = 3]
+  let v3h2-death  sum [MSMix-deaths-here] of patches with [vt = 3]
+  let v3h3-death  sum [LBr-deaths-here] of patches with [vt = 3]
+  let v3h4-death  sum [WDGr-deaths-here] of patches with [vt = 3]
+  let v3h5-death  sum [NRum-deaths-here] of patches with [vt = 3]
+
+  let v4h1-death  sum [SNSBr-deaths-here] of patches with [vt = 4]
+  let v4h2-death  sum [MSMix-deaths-here] of patches with [vt = 4]
+  let v4h3-death  sum [LBr-deaths-here] of patches with [vt = 4]
+  let v4h4-death  sum [WDGr-deaths-here] of patches with [vt = 4]
+  let v4h5-death  sum [NRum-deaths-here] of patches with [vt = 4]
+
+  let v5h1-death  sum [SNSBr-deaths-here] of patches with [vt = 5]
+  let v5h2-death  sum [MSMix-deaths-here] of patches with [vt = 5]
+  let v5h3-death  sum [LBr-deaths-here] of patches with [vt = 5]
+  let v5h4-death  sum [WDGr-deaths-here] of patches with [vt = 5]
+  let v5h5-death  sum [NRum-deaths-here] of patches with [vt = 5]
+
+  let v6h1-death  sum [SNSBr-deaths-here] of patches with [vt = 6]
+  let v6h2-death  sum [MSMix-deaths-here] of patches with [vt = 6]
+  let v6h3-death  sum [LBr-deaths-here] of patches with [vt = 6]
+  let v6h4-death  sum [WDGr-deaths-here] of patches with [vt = 6]
+  let v6h5-death  sum [NRum-deaths-here] of patches with [vt = 6]
+
+  let v7h1-death  sum [SNSBr-deaths-here] of patches with [vt = 7]
+  let v7h2-death  sum [MSMix-deaths-here] of patches with [vt = 7]
+  let v7h3-death  sum [LBr-deaths-here] of patches with [vt = 7]
+  let v7h4-death  sum [WDGr-deaths-here] of patches with [vt = 7]
+  let v7h5-death  sum [NRum-deaths-here] of patches with [vt = 7]
+
+  let v8h1-death  sum [SNSBr-deaths-here] of patches with [vt = 8]
+  let v8h2-death  sum [MSMix-deaths-here] of patches with [vt = 8]
+  let v8h3-death  sum [LBr-deaths-here] of patches with [vt = 8]
+  let v8h4-death  sum [WDGr-deaths-here] of patches with [vt = 8]
+  let v8h5-death  sum [NRum-deaths-here] of patches with [vt = 8]
+
+  let v9h1-death  sum [SNSBr-deaths-here] of patches with [vt = 9]
+  let v9h2-death  sum [MSMix-deaths-here] of patches with [vt = 9]
+  let v9h3-death  sum [LBr-deaths-here] of patches with [vt = 9]
+  let v9h4-death  sum [WDGr-deaths-here] of patches with [vt = 9]
+  let v9h5-death  sum [NRum-deaths-here] of patches with [vt = 9]
+
+  let v10h1-death  sum [SNSBr-deaths-here] of patches with [vt = 10]
+  let v10h2-death  sum [MSMix-deaths-here] of patches with [vt = 10]
+  let v10h3-death  sum [LBr-deaths-here] of patches with [vt = 10]
+  let v10h4-death  sum [WDGr-deaths-here] of patches with [vt = 10]
+  let v10h5-death  sum [NRum-deaths-here] of patches with [vt = 10]
+
+  let v11h1-death  sum [SNSBr-deaths-here] of patches with [vt = 11]
+  let v11h2-death  sum [MSMix-deaths-here] of patches with [vt = 11]
+  let v11h3-death  sum [LBr-deaths-here] of patches with [vt = 11]
+  let v11h4-death  sum [WDGr-deaths-here] of patches with [vt = 11]
+  let v11h5-death  sum [NRum-deaths-here] of patches with [vt = 11]
+
+  let v12h1-death  sum [SNSBr-deaths-here] of patches with [vt = 12]
+  let v12h2-death  sum [MSMix-deaths-here] of patches with [vt = 12]
+  let v12h3-death  sum [LBr-deaths-here] of patches with [vt = 12]
+  let v12h4-death  sum [WDGr-deaths-here] of patches with [vt = 12]
+  let v12h5-death  sum [NRum-deaths-here] of patches with [vt = 12]
+
+  let v13h1-death  sum [SNSBr-deaths-here] of patches with [vt = 13]
+  let v13h2-death  sum [MSMix-deaths-here] of patches with [vt = 13]
+  let v13h3-death  sum [LBr-deaths-here] of patches with [vt = 13]
+  let v13h4-death  sum [WDGr-deaths-here] of patches with [vt = 13]
+  let v13h5-death  sum [NRum-deaths-here] of patches with [vt = 13]
+
+  let v14h1-death  sum [SNSBr-deaths-here] of patches with [vt = 14]
+  let v14h2-death  sum [MSMix-deaths-here] of patches with [vt = 14]
+  let v14h3-death  sum [LBr-deaths-here] of patches with [vt = 14]
+  let v14h4-death  sum [WDGr-deaths-here] of patches with [vt = 14]
+  let v14h5-death  sum [NRum-deaths-here] of patches with [vt = 14]
+
+
+  let h1v1-time-mean mean [veg-type1-traversed] of SNSBrS
+  let h2v1-time-mean mean [veg-type1-traversed] of MSMixS
+  let h3v1-time-mean mean [veg-type1-traversed] of LBrS
+  let h4v1-time-mean mean [veg-type1-traversed] of WDGrS
+  let h5v1-time-mean mean [veg-type1-traversed] of NRumS
+
+  let h1v2-time-mean mean [veg-type2-traversed] of SNSBrS
+  let h2v2-time-mean mean [veg-type2-traversed] of MSMixS
+  let h3v2-time-mean mean [veg-type2-traversed] of LBrS
+  let h4v2-time-mean mean [veg-type2-traversed] of WDGrS
+  let h5v2-time-mean mean [veg-type2-traversed] of NRumS
+
+  let h1v3-time-mean mean [veg-type3-traversed] of SNSBrS
+  let h2v3-time-mean mean [veg-type3-traversed] of MSMixS
+  let h3v3-time-mean mean [veg-type3-traversed] of LBrS
+  let h4v3-time-mean mean [veg-type3-traversed] of WDGrS
+  let h5v3-time-mean mean [veg-type3-traversed] of NRumS
+
+  let h1v4-time-mean mean [veg-type4-traversed] of SNSBrS
+  let h2v4-time-mean mean [veg-type4-traversed] of MSMixS
+  let h3v4-time-mean mean [veg-type4-traversed] of LBrS
+  let h4v4-time-mean mean [veg-type4-traversed] of WDGrS
+  let h5v4-time-mean mean [veg-type4-traversed] of NRumS
+
+  let h1v5-time-mean mean [veg-type5-traversed] of SNSBrS
+  let h2v5-time-mean mean [veg-type5-traversed] of MSMixS
+  let h3v5-time-mean mean [veg-type5-traversed] of LBrS
+  let h4v5-time-mean mean [veg-type5-traversed] of WDGrS
+  let h5v5-time-mean mean [veg-type5-traversed] of NRumS
+
+  let h1v6-time-mean mean [veg-type6-traversed] of SNSBrS
+  let h2v6-time-mean mean [veg-type6-traversed] of MSMixS
+  let h3v6-time-mean mean [veg-type6-traversed] of LBrS
+  let h4v6-time-mean mean [veg-type6-traversed] of WDGrS
+  let h5v6-time-mean mean [veg-type6-traversed] of NRumS
+
+  let h1v7-time-mean mean [veg-type7-traversed] of SNSBrS
+  let h2v7-time-mean mean [veg-type7-traversed] of MSMixS
+  let h3v7-time-mean mean [veg-type7-traversed] of LBrS
+  let h4v7-time-mean mean [veg-type7-traversed] of WDGrS
+  let h5v7-time-mean mean [veg-type7-traversed] of NRumS
+
+  let h1v8-time-mean mean [veg-type8-traversed] of SNSBrS
+  let h2v8-time-mean mean [veg-type8-traversed] of MSMixS
+  let h3v8-time-mean mean [veg-type8-traversed] of LBrS
+  let h4v8-time-mean mean [veg-type8-traversed] of WDGrS
+  let h5v8-time-mean mean [veg-type8-traversed] of NRumS
+
+  let h1v9-time-mean mean [veg-type9-traversed] of SNSBrS
+  let h2v9-time-mean mean [veg-type9-traversed] of MSMixS
+  let h3v9-time-mean mean [veg-type9-traversed] of LBrS
+  let h4v9-time-mean mean [veg-type9-traversed] of WDGrS
+  let h5v9-time-mean mean [veg-type9-traversed] of NRumS
+
+  let h1v10-time-mean mean [veg-type10-traversed] of SNSBrS
+  let h2v10-time-mean mean [veg-type10-traversed] of MSMixS
+  let h3v10-time-mean mean [veg-type10-traversed] of LBrS
+  let h4v10-time-mean mean [veg-type10-traversed] of WDGrS
+  let h5v10-time-mean mean [veg-type10-traversed] of NRumS
+
+  let h1v11-time-mean mean [veg-type11-traversed] of SNSBrS
+  let h2v11-time-mean mean [veg-type11-traversed] of MSMixS
+  let h3v11-time-mean mean [veg-type11-traversed] of LBrS
+  let h4v11-time-mean mean [veg-type11-traversed] of WDGrS
+  let h5v11-time-mean mean [veg-type11-traversed] of NRumS
+
+  let h1v12-time-mean mean [veg-type12-traversed] of SNSBrS
+  let h2v12-time-mean mean [veg-type12-traversed] of MSMixS
+  let h3v12-time-mean mean [veg-type12-traversed] of LBrS
+  let h4v12-time-mean mean [veg-type12-traversed] of WDGrS
+  let h5v12-time-mean mean [veg-type12-traversed] of NRumS
+
+  let h1v13-time-mean mean [veg-type13-traversed] of SNSBrS
+  let h2v13-time-mean mean [veg-type13-traversed] of MSMixS
+  let h3v13-time-mean mean [veg-type13-traversed] of LBrS
+  let h4v13-time-mean mean [veg-type13-traversed] of WDGrS
+  let h5v13-time-mean mean [veg-type13-traversed] of NRumS
+
+  let h1v14-time-mean mean [veg-type14-traversed] of SNSBrS
+  let h2v14-time-mean mean [veg-type14-traversed] of MSMixS
+  let h3v14-time-mean mean [veg-type14-traversed] of LBrS
+  let h4v14-time-mean mean [veg-type14-traversed] of WDGrS
+  let h5v14-time-mean mean [veg-type14-traversed] of NRumS
+
+
+
+
+  let filename  "pap-mammals-abm-output_"
+  set filename word filename behaviorspace-experiment-name
+  set filename word filename ".csv"
+  let text-out 0
+
+  ifelse file-exists? filename [][
+    file-open filename
+    set text-out (sentence ", behaviorspace-run-number , High-Risk-of-Death , Low-Risk-of-Death , lion-density , heat-of-the-day-begins , heat-of-the-day-ends , lion-speed , lions-move-more-at-night , SNSBr-speed , MSMix-speed , WDGr-speed , NRum-speed , LBr-speed , veg-type1-encountered , veg-type2-encountered , veg-type3-encountered , veg-type4-encountered , veg-type5-encountered , veg-type6-encountered , veg-type7-encountered , veg-type8-encountered , veg-type9-encountered , veg-type10-encountered , veg-type11-encountered , veg-type12-encountered , veg-type13-encountered , veg-type14-encountered ,  v1h1-death , v1h2-death , v1h3-death , v1h4-death , v1h5-death , v2h1-death , v2h2-death , v2h3-death , v2h4-death , v2h5-death , v3h1-death , v3h2-death , v3h3-death , v3h4-death , v3h5-death , v4h1-death , v4h2-death , v4h3-death , v4h4-death , v4h5-death , v5h1-death , v5h2-death , v5h3-death , v5h4-death , v5h5-death , v6h1-death , v6h2-death , v6h3-death , v6h4-death , v6h5-death , v7h1-death , v7h2-death , v7h3-death , v7h4-death , v7h5-death , v8h1-death , v8h2-death , v8h3-death , v8h4-death , v8h5-death , v9h1-death , v9h2-death , v9h3-death , v9h4-death , v9h5-death , v10h1-death , v10h2-death , v10h3-death , v10h4-death , v10h5-death , v11h1-death , v11h2-death , v11h3-death , v11h4-death , v11h5-death , v12h1-death , v12h2-death , v12h3-death , v12h4-death , v12h5-death , v13h1-death , v13h2-death , v13h3-death , v13h4-death , v13h5-death , v14h1-death , v14h2-death , v14h3-death , v14h4-death , v14h5-death , h1v1-time-mean , h2v1-time-mean , h3v1-time-mean , h4v1-time-mean , h5v1-time-mean , h1v2-time-mean , h2v2-time-mean , h3v2-time-mean , h4v2-time-mean , h5v2-time-mean , h1v3-time-mean , h2v3-time-mean , h3v3-time-mean , h4v3-time-mean , h5v3-time-mean , h1v4-time-mean , h2v4-time-mean , h3v4-time-mean , h4v4-time-mean , h5v4-time-mean , h1v5-time-mean , h2v5-time-mean , h3v5-time-mean , h4v5-time-mean , h5v5-time-mean , h1v6-time-mean , h2v6-time-mean , h3v6-time-mean , h4v6-time-mean , h5v6-time-mean , h1v7-time-mean , h2v7-time-mean , h3v7-time-mean , h4v7-time-mean , h5v7-time-mean , h1v8-time-mean , h2v8-time-mean , h3v8-time-mean , h4v8-time-mean , h5v8-time-mean , h1v9-time-mean , h2v9-time-mean , h3v9-time-mean , h4v9-time-mean , h5v9-time-mean , h1v10-time-mean , h2v10-time-mean , h3v10-time-mean , h4v10-time-mean , h5v10-time-mean , h1v11-time-mean , h2v11-time-mean , h3v11-time-mean , h4v11-time-mean , h5v11-time-mean , h1v12-time-mean , h2v12-time-mean , h3v12-time-mean , h4v12-time-mean , h5v12-time-mean , h1v13-time-mean , h2v13-time-mean , h3v13-time-mean , h4v13-time-mean , h5v13-time-mean , h1v14-time-mean , h2v14-time-mean , h3v14-time-mean , h4v14-time-mean , h5v14-time-mean , ticks ,")
+    file-type text-out
+    file-print ""
+    file-close
+  ]
+
+  file-open filename
+
+  set text-out (sentence "," behaviorspace-run-number "," High-Risk-of-Death "," Low-Risk-of-Death "," lion-density "," heat-of-the-day-begins "," heat-of-the-day-ends "," lion-speed ","
+         lions-move-more-at-night "," SNSBr-speed "," MSMix-speed "," WDGr-speed "," NRum-speed "," LBr-speed "," veg-type1-encountered "," veg-type2-encountered "," veg-type3-encountered ","
+         veg-type4-encountered "," veg-type5-encountered "," veg-type6-encountered "," veg-type7-encountered "," veg-type8-encountered "," veg-type9-encountered "," veg-type10-encountered ","
+         veg-type11-encountered "," veg-type12-encountered "," veg-type13-encountered "," veg-type14-encountered ","
+         v1h1-death "," v1h2-death "," v1h3-death "," v1h4-death "," v1h5-death ","
+         v2h1-death "," v2h2-death "," v2h3-death "," v2h4-death "," v2h5-death ","
+         v3h1-death "," v3h2-death "," v3h3-death "," v3h4-death "," v3h5-death ","
+         v4h1-death "," v4h2-death "," v4h3-death "," v4h4-death "," v4h5-death ","
+         v5h1-death "," v5h2-death "," v5h3-death "," v5h4-death "," v5h5-death ","
+         v6h1-death "," v6h2-death "," v6h3-death "," v6h4-death "," v6h5-death ","
+         v7h1-death "," v7h2-death "," v7h3-death "," v7h4-death "," v7h5-death ","
+         v8h1-death "," v8h2-death "," v8h3-death "," v8h4-death "," v8h5-death ","
+         v9h1-death "," v9h2-death "," v9h3-death "," v9h4-death "," v9h5-death ","
+         v10h1-death "," v10h2-death "," v10h3-death "," v10h4-death "," v10h5-death ","
+         v11h1-death "," v11h2-death "," v11h3-death "," v11h4-death "," v11h5-death ","
+         v12h1-death "," v12h2-death "," v12h3-death "," v12h4-death "," v12h5-death ","
+         v13h1-death "," v13h2-death "," v13h3-death "," v13h4-death "," v13h5-death ","
+         v14h1-death "," v14h2-death "," v14h3-death "," v14h4-death "," v14h5-death ","
+         h1v1-time-mean "," h2v1-time-mean "," h3v1-time-mean "," h4v1-time-mean "," h5v1-time-mean ","
+         h1v2-time-mean "," h2v2-time-mean "," h3v2-time-mean "," h4v2-time-mean "," h5v2-time-mean ","
+         h1v3-time-mean "," h2v3-time-mean "," h3v3-time-mean "," h4v3-time-mean "," h5v3-time-mean ","
+         h1v4-time-mean "," h2v4-time-mean "," h3v4-time-mean "," h4v4-time-mean "," h5v4-time-mean ","
+         h1v5-time-mean "," h2v5-time-mean "," h3v5-time-mean "," h4v5-time-mean "," h5v5-time-mean ","
+         h1v6-time-mean "," h2v6-time-mean "," h3v6-time-mean "," h4v6-time-mean "," h5v6-time-mean ","
+         h1v7-time-mean "," h2v7-time-mean "," h3v7-time-mean "," h4v7-time-mean "," h5v7-time-mean ","
+         h1v8-time-mean "," h2v8-time-mean "," h3v8-time-mean "," h4v8-time-mean "," h5v8-time-mean ","
+         h1v9-time-mean "," h2v9-time-mean "," h3v9-time-mean "," h4v9-time-mean "," h5v9-time-mean ","
+         h1v10-time-mean "," h2v10-time-mean "," h3v10-time-mean "," h4v10-time-mean "," h5v10-time-mean ","
+         h1v11-time-mean "," h2v11-time-mean "," h3v11-time-mean "," h4v11-time-mean "," h5v11-time-mean ","
+         h1v12-time-mean "," h2v12-time-mean "," h3v12-time-mean "," h4v12-time-mean "," h5v12-time-mean ","
+         h1v13-time-mean "," h2v13-time-mean "," h3v13-time-mean "," h4v13-time-mean "," h5v13-time-mean ","
+         h1v14-time-mean "," h2v14-time-mean "," h3v14-time-mean "," h4v14-time-mean "," h5v14-time-mean ","
+         ticks ",")
+  file-type text-out
+  file-print ""
+
+  file-close
+
+  report""
+
+end
+
+
+
+
+
+
+
 
 @#$#@#$#@
 GRAPHICS-WINDOW
@@ -801,7 +1042,7 @@ SWITCH
 417
 display-kill-locations
 display-kill-locations
-0
+1
 1
 -1000
 
@@ -967,7 +1208,7 @@ SWITCH
 590
 display-mode?
 display-mode?
-0
+1
 1
 -1000
 
@@ -1380,10 +1621,11 @@ NetLogo 6.3.0
 @#$#@#$#@
 @#$#@#$#@
 <experiments>
-  <experiment name="experiment-test" repetitions="1" runMetricsEveryStep="true">
+  <experiment name="experiment-test" repetitions="2" runMetricsEveryStep="false">
     <setup>setup</setup>
     <go>go</go>
-    <metric>count turtles</metric>
+    <exitCondition>day-count = 30</exitCondition>
+    <metric>save-model-output</metric>
     <enumeratedValueSet variable="display-kill-locations">
       <value value="false"/>
     </enumeratedValueSet>
@@ -1391,25 +1633,25 @@ NetLogo 6.3.0
       <value value="90"/>
     </enumeratedValueSet>
     <enumeratedValueSet variable="display-mode?">
-      <value value="true"/>
+      <value value="false"/>
     </enumeratedValueSet>
     <enumeratedValueSet variable="LBr-speed">
       <value value="2"/>
     </enumeratedValueSet>
-    <enumeratedValueSet variable="heat-of-the-day-ends">
-      <value value="16"/>
-    </enumeratedValueSet>
     <enumeratedValueSet variable="lion-density">
       <value value="0.08"/>
+    </enumeratedValueSet>
+    <enumeratedValueSet variable="heat-of-the-day-ends">
+      <value value="16"/>
     </enumeratedValueSet>
     <enumeratedValueSet variable="heat-of-the-day-begins">
       <value value="11"/>
     </enumeratedValueSet>
-    <enumeratedValueSet variable="lions-move-more-at-night">
-      <value value="true"/>
-    </enumeratedValueSet>
     <enumeratedValueSet variable="lion-speed">
       <value value="1"/>
+    </enumeratedValueSet>
+    <enumeratedValueSet variable="lions-move-more-at-night">
+      <value value="true"/>
     </enumeratedValueSet>
     <enumeratedValueSet variable="NRum-speed">
       <value value="2"/>
