@@ -65,7 +65,7 @@ turtles-own [
   veg-type11-traversed      ; Number of times Vegetation Type 11 was crossed by an agent
   veg-type12-traversed      ; Number of times Vegetation Type 12 was crossed by an agent
   veg-type13-traversed      ; Number of times Vegetation Type 13 was crossed by an agent
-  veg-type14-traversed      ; Number of times Vegetation Type 14 was crossed by an agent
+  veg-type14-traversed      ; Number of times Vegetation Type 1 was crossed by an agent
 
 ]
 
