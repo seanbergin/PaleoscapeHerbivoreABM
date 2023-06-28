@@ -1052,7 +1052,7 @@ hours-between-lion-meals
 hours-between-lion-meals
 1
 50
-20.0
+22.0
 1
 1
 NIL
