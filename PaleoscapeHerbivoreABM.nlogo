@@ -864,8 +864,6 @@ end
 
 
 
-
-
 @#$#@#$#@
 GRAPHICS-WINDOW
 322
@@ -969,7 +967,7 @@ SNSBr-speed
 SNSBr-speed
 1
 5
-1.0
+2.0
 1
 1
 km
@@ -999,7 +997,7 @@ LBr-speed
 LBr-speed
 1
 5
-2.0
+1.0
 1
 1
 km
@@ -1014,7 +1012,7 @@ WDGr-speed
 WDGr-speed
 1
 5
-2.0
+1.0
 1
 1
 km
@@ -1174,7 +1172,7 @@ lion-speed
 lion-speed
 1
 5
-1.0
+2.0
 1
 1
 km
@@ -1670,6 +1668,313 @@ NetLogo 6.3.0
     </enumeratedValueSet>
     <enumeratedValueSet variable="WDGr-speed">
       <value value="2"/>
+    </enumeratedValueSet>
+  </experiment>
+  <experiment name="experiment-1-june-2023" repetitions="10" runMetricsEveryStep="false">
+    <setup>setup</setup>
+    <go>go</go>
+    <exitCondition>day-count = 30</exitCondition>
+    <metric>save-model-output</metric>
+    <enumeratedValueSet variable="display-kill-locations">
+      <value value="false"/>
+    </enumeratedValueSet>
+    <enumeratedValueSet variable="High-Risk-of-Death">
+      <value value="90"/>
+    </enumeratedValueSet>
+    <enumeratedValueSet variable="display-mode?">
+      <value value="false"/>
+    </enumeratedValueSet>
+    <enumeratedValueSet variable="LBr-speed">
+      <value value="1"/>
+      <value value="2"/>
+      <value value="3"/>
+    </enumeratedValueSet>
+    <enumeratedValueSet variable="lion-density">
+      <value value="0.08"/>
+    </enumeratedValueSet>
+    <enumeratedValueSet variable="heat-of-the-day-ends">
+      <value value="16"/>
+    </enumeratedValueSet>
+    <enumeratedValueSet variable="heat-of-the-day-begins">
+      <value value="11"/>
+    </enumeratedValueSet>
+    <enumeratedValueSet variable="lion-speed">
+      <value value="1"/>
+      <value value="2"/>
+      <value value="3"/>
+    </enumeratedValueSet>
+    <enumeratedValueSet variable="lions-move-more-at-night">
+      <value value="true"/>
+      <value value="false"/>
+    </enumeratedValueSet>
+    <enumeratedValueSet variable="NRum-speed">
+      <value value="1"/>
+      <value value="2"/>
+      <value value="3"/>
+    </enumeratedValueSet>
+    <enumeratedValueSet variable="hours-between-lion-meals">
+      <value value="10"/>
+      <value value="20"/>
+    </enumeratedValueSet>
+    <enumeratedValueSet variable="MSMix-speed">
+      <value value="1"/>
+      <value value="2"/>
+      <value value="3"/>
+    </enumeratedValueSet>
+    <enumeratedValueSet variable="Low-Risk-of-Death">
+      <value value="10"/>
+    </enumeratedValueSet>
+    <enumeratedValueSet variable="SNSBr-speed">
+      <value value="1"/>
+      <value value="2"/>
+      <value value="3"/>
+    </enumeratedValueSet>
+    <enumeratedValueSet variable="WDGr-speed">
+      <value value="1"/>
+      <value value="2"/>
+      <value value="3"/>
+    </enumeratedValueSet>
+  </experiment>
+  <experiment name="experiment-2-speed-june-2023" repetitions="100" runMetricsEveryStep="false">
+    <setup>setup</setup>
+    <go>go</go>
+    <exitCondition>day-count = 30</exitCondition>
+    <metric>save-model-output</metric>
+    <enumeratedValueSet variable="display-kill-locations">
+      <value value="false"/>
+    </enumeratedValueSet>
+    <enumeratedValueSet variable="High-Risk-of-Death">
+      <value value="90"/>
+    </enumeratedValueSet>
+    <enumeratedValueSet variable="display-mode?">
+      <value value="false"/>
+    </enumeratedValueSet>
+    <enumeratedValueSet variable="LBr-speed">
+      <value value="1"/>
+      <value value="3"/>
+    </enumeratedValueSet>
+    <enumeratedValueSet variable="lion-density">
+      <value value="0.08"/>
+    </enumeratedValueSet>
+    <enumeratedValueSet variable="heat-of-the-day-ends">
+      <value value="16"/>
+    </enumeratedValueSet>
+    <enumeratedValueSet variable="heat-of-the-day-begins">
+      <value value="11"/>
+    </enumeratedValueSet>
+    <enumeratedValueSet variable="lion-speed">
+      <value value="1"/>
+      <value value="3"/>
+    </enumeratedValueSet>
+    <enumeratedValueSet variable="lions-move-more-at-night">
+      <value value="true"/>
+      <value value="false"/>
+    </enumeratedValueSet>
+    <enumeratedValueSet variable="NRum-speed">
+      <value value="1"/>
+      <value value="3"/>
+    </enumeratedValueSet>
+    <enumeratedValueSet variable="hours-between-lion-meals">
+      <value value="20"/>
+    </enumeratedValueSet>
+    <enumeratedValueSet variable="MSMix-speed">
+      <value value="1"/>
+      <value value="3"/>
+    </enumeratedValueSet>
+    <enumeratedValueSet variable="Low-Risk-of-Death">
+      <value value="10"/>
+    </enumeratedValueSet>
+    <enumeratedValueSet variable="SNSBr-speed">
+      <value value="1"/>
+      <value value="3"/>
+    </enumeratedValueSet>
+    <enumeratedValueSet variable="WDGr-speed">
+      <value value="1"/>
+      <value value="3"/>
+    </enumeratedValueSet>
+  </experiment>
+  <experiment name="experiment-3-lions-june-2023" repetitions="100" runMetricsEveryStep="false">
+    <setup>setup</setup>
+    <go>go</go>
+    <exitCondition>day-count = 30</exitCondition>
+    <metric>save-model-output</metric>
+    <enumeratedValueSet variable="display-kill-locations">
+      <value value="false"/>
+    </enumeratedValueSet>
+    <enumeratedValueSet variable="High-Risk-of-Death">
+      <value value="90"/>
+    </enumeratedValueSet>
+    <enumeratedValueSet variable="display-mode?">
+      <value value="false"/>
+    </enumeratedValueSet>
+    <enumeratedValueSet variable="LBr-speed">
+      <value value="2"/>
+    </enumeratedValueSet>
+    <enumeratedValueSet variable="lion-density">
+      <value value="0.04"/>
+      <value value="0.08"/>
+    </enumeratedValueSet>
+    <enumeratedValueSet variable="heat-of-the-day-ends">
+      <value value="16"/>
+    </enumeratedValueSet>
+    <enumeratedValueSet variable="heat-of-the-day-begins">
+      <value value="11"/>
+    </enumeratedValueSet>
+    <enumeratedValueSet variable="lion-speed">
+      <value value="1"/>
+      <value value="2"/>
+      <value value="3"/>
+    </enumeratedValueSet>
+    <enumeratedValueSet variable="lions-move-more-at-night">
+      <value value="true"/>
+      <value value="false"/>
+    </enumeratedValueSet>
+    <enumeratedValueSet variable="NRum-speed">
+      <value value="2"/>
+    </enumeratedValueSet>
+    <enumeratedValueSet variable="hours-between-lion-meals">
+      <value value="10"/>
+      <value value="20"/>
+    </enumeratedValueSet>
+    <enumeratedValueSet variable="MSMix-speed">
+      <value value="2"/>
+    </enumeratedValueSet>
+    <enumeratedValueSet variable="Low-Risk-of-Death">
+      <value value="10"/>
+    </enumeratedValueSet>
+    <enumeratedValueSet variable="SNSBr-speed">
+      <value value="1"/>
+    </enumeratedValueSet>
+    <enumeratedValueSet variable="WDGr-speed">
+      <value value="2"/>
+    </enumeratedValueSet>
+  </experiment>
+  <experiment name="experiment-4-june-2023-lions-move" repetitions="10" runMetricsEveryStep="false">
+    <setup>setup</setup>
+    <go>go</go>
+    <exitCondition>day-count = 30</exitCondition>
+    <metric>save-model-output</metric>
+    <enumeratedValueSet variable="display-kill-locations">
+      <value value="false"/>
+    </enumeratedValueSet>
+    <enumeratedValueSet variable="High-Risk-of-Death">
+      <value value="90"/>
+    </enumeratedValueSet>
+    <enumeratedValueSet variable="display-mode?">
+      <value value="false"/>
+    </enumeratedValueSet>
+    <enumeratedValueSet variable="LBr-speed">
+      <value value="1"/>
+      <value value="2"/>
+      <value value="3"/>
+    </enumeratedValueSet>
+    <enumeratedValueSet variable="lion-density">
+      <value value="0.08"/>
+    </enumeratedValueSet>
+    <enumeratedValueSet variable="heat-of-the-day-ends">
+      <value value="16"/>
+    </enumeratedValueSet>
+    <enumeratedValueSet variable="heat-of-the-day-begins">
+      <value value="11"/>
+    </enumeratedValueSet>
+    <enumeratedValueSet variable="lion-speed">
+      <value value="1"/>
+      <value value="2"/>
+      <value value="3"/>
+    </enumeratedValueSet>
+    <enumeratedValueSet variable="lions-move-more-at-night">
+      <value value="true"/>
+    </enumeratedValueSet>
+    <enumeratedValueSet variable="NRum-speed">
+      <value value="1"/>
+      <value value="2"/>
+      <value value="3"/>
+    </enumeratedValueSet>
+    <enumeratedValueSet variable="hours-between-lion-meals">
+      <value value="10"/>
+      <value value="20"/>
+    </enumeratedValueSet>
+    <enumeratedValueSet variable="MSMix-speed">
+      <value value="1"/>
+      <value value="2"/>
+      <value value="3"/>
+    </enumeratedValueSet>
+    <enumeratedValueSet variable="Low-Risk-of-Death">
+      <value value="10"/>
+    </enumeratedValueSet>
+    <enumeratedValueSet variable="SNSBr-speed">
+      <value value="1"/>
+      <value value="2"/>
+      <value value="3"/>
+    </enumeratedValueSet>
+    <enumeratedValueSet variable="WDGr-speed">
+      <value value="1"/>
+      <value value="2"/>
+      <value value="3"/>
+    </enumeratedValueSet>
+  </experiment>
+  <experiment name="experiment-5-june-2023-lions-no-move" repetitions="10" runMetricsEveryStep="false">
+    <setup>setup</setup>
+    <go>go</go>
+    <exitCondition>day-count = 30</exitCondition>
+    <metric>save-model-output</metric>
+    <enumeratedValueSet variable="display-kill-locations">
+      <value value="false"/>
+    </enumeratedValueSet>
+    <enumeratedValueSet variable="High-Risk-of-Death">
+      <value value="90"/>
+    </enumeratedValueSet>
+    <enumeratedValueSet variable="display-mode?">
+      <value value="false"/>
+    </enumeratedValueSet>
+    <enumeratedValueSet variable="LBr-speed">
+      <value value="1"/>
+      <value value="2"/>
+      <value value="3"/>
+    </enumeratedValueSet>
+    <enumeratedValueSet variable="lion-density">
+      <value value="0.08"/>
+    </enumeratedValueSet>
+    <enumeratedValueSet variable="heat-of-the-day-ends">
+      <value value="16"/>
+    </enumeratedValueSet>
+    <enumeratedValueSet variable="heat-of-the-day-begins">
+      <value value="11"/>
+    </enumeratedValueSet>
+    <enumeratedValueSet variable="lion-speed">
+      <value value="1"/>
+      <value value="2"/>
+      <value value="3"/>
+    </enumeratedValueSet>
+    <enumeratedValueSet variable="lions-move-more-at-night">
+      <value value="false"/>
+    </enumeratedValueSet>
+    <enumeratedValueSet variable="NRum-speed">
+      <value value="1"/>
+      <value value="2"/>
+      <value value="3"/>
+    </enumeratedValueSet>
+    <enumeratedValueSet variable="hours-between-lion-meals">
+      <value value="10"/>
+      <value value="20"/>
+    </enumeratedValueSet>
+    <enumeratedValueSet variable="MSMix-speed">
+      <value value="1"/>
+      <value value="2"/>
+      <value value="3"/>
+    </enumeratedValueSet>
+    <enumeratedValueSet variable="Low-Risk-of-Death">
+      <value value="10"/>
+    </enumeratedValueSet>
+    <enumeratedValueSet variable="SNSBr-speed">
+      <value value="1"/>
+      <value value="2"/>
+      <value value="3"/>
+    </enumeratedValueSet>
+    <enumeratedValueSet variable="WDGr-speed">
+      <value value="1"/>
+      <value value="2"/>
+      <value value="3"/>
     </enumeratedValueSet>
   </experiment>
 </experiments>
