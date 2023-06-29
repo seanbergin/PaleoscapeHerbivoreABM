@@ -1,0 +1,10 @@
+cff-version: 1.2.0
+message: "If you use this software, please cite it as below."
+authors:
+  - family-names: "Bergin"
+    given-names: "Sean"
+    orcid: "https://orcid.org/0000-0001-9576-7914"
+title: "PaleoscapeHerbivoreABM v.1.0.1"
+version: 1.0.1
+date-released: 2023-06-29
+url: "https://github.com/seanbergin/PaleoscapeHerbivoreABM/"
